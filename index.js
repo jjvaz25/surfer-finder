@@ -6,7 +6,8 @@ require('dotenv/config');
 const app = express();
 
 //set up mongoose connection
-const mongoDB = process.env.DB_URL;
+// const mongoDB = process.env.DB_URL;
+const mongoDB = 'mongodb+srv://jjvaz25:mongodbpwd@cluster0-m85lc.mongodb.net/surfer-finder?retryWrites=true&w=majority'
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
