@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find surfers near you!</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h1 class="title">Surfer Finder - A REST API</h1>
+  <div id="homepage">
+    <h1>Find surfers in your area!</h1>
+    <div id="surfers"></div>
+    <div>Hint: Enter 33 for latitude and -118 for longitude</div>
+  </div>
+
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/react@15/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+  <!--Create React Component-->
+  <script type="text/babel">
+  
+  var Surfers = React.createClass({
+    getInitialState: function() {
+      return ({
+        surfers: []
+      });
+    },
+    render: function() {
+      var surfers = this.state.surfers;
+      surfers = surfers.map(function(surfer, index) {
+        return (
+          <li key={index}>
+            <span className={surfer.available}></span>
+            <span className="name">{surfer.name}</span>
+            <span className="level">{surfer.level}</span>
+            <span className="dist">{Math.floor(surfer.dis / 1000)} km</span>
+          </li>
+        );
+      })
+      return (
+        <div id="surfer-container">
+          <form id="search" onSubmit={this.handleSubmit}>
+              <label>Enter your Latitude:</label>
+              <input type="text" ref="lat" placeholder="latitude" required />
+              <label>Enter your Longitude:</label>
+              <input type="text" ref="lng" placeholder="longitude" required />
+              <input type="submit" value="Find Surfers" />
+          </form>
+          <ul>{surfers}</ul>
+        </div>
+      )
+    },
+    handleSubmit: function(e) {
+      e.preventDefault();
+      var lng = this.refs.lng.value;
+      var lat = this.refs.lat.value;
+
+      fetch('/api/surfers?lng=' + lng + '&lat=' + lat).then(function(data) {
+        return data.json();
+      }).then( json => {
+        this.setState({
+          surfers: json
+        });
+        console.log(json)
+      });
+    }
+  }); 
+
+  ReactDOM.render(<Surfers />, document.getElementById('surfers'));
+
+  
+  </script>
+
+</body>
+</html>

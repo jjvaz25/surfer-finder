@@ -14,6 +14,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static('public'));
 
 //initialize routes middleware
 app.use('/api', routes);
