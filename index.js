@@ -5,6 +5,8 @@ require('dotenv/config');
 
 const app = express();
 
+const PORT = 4000;
+
 //set up mongoose connection
 // const mongoDB = process.env.DB_URL;
 const mongoDB = 'mongodb+srv://jjvaz25:mongodbpwd@cluster0-m85lc.mongodb.net/surfer-finder?retryWrites=true&w=majority'
@@ -26,6 +28,6 @@ app.use((err, req, res, next) => {
   res.status(422).send({ error: err.errors.name.message });
 })
 
-app.listen(process.env.port || 4000, () => {
-  console.log('Now listening for requests on localhost 4000');
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`Now listening for requests on ${PORT}`);
 });
