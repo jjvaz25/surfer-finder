@@ -27,5 +27,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.port || 4000, () => {
-  console.log('Now listening for requests');
+  console.log('Now listening for requests on localhost 4000');
 });
